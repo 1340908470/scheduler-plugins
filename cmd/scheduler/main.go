@@ -23,6 +23,7 @@ import (
 	_ "k8s.io/component-base/metrics/prometheus/clientgo" // for rest client metric registration
 	_ "k8s.io/component-base/metrics/prometheus/version"  // for version metric registration
 	"k8s.io/kubernetes/cmd/kube-scheduler/app"
+	"sigs.k8s.io/scheduler-plugins/pkg/networktraffic"
 
 	"sigs.k8s.io/scheduler-plugins/pkg/capacityscheduling"
 	"sigs.k8s.io/scheduler-plugins/pkg/coscheduling"
@@ -58,6 +59,7 @@ func main() {
 		// app.WithPlugin(crossnodepreemption.Name, crossnodepreemption.New),
 		app.WithPlugin(podstate.Name, podstate.New),
 		app.WithPlugin(qos.Name, qos.New),
+		app.WithPlugin(networktraffic.Name, networktraffic.New),
 	)
 
 	code := cli.Run(command)
